@@ -16,7 +16,7 @@ class MongoDBStore:
     def get_all_documents(self, db_name: str, db_collection: str):
         db = self.client[db_name]
         collection = db[db_collection]
-        return collection
+        return collection.find()
 
     def get_document_by_id(self, db_name: str, db_collection: str, document_id: str):
         db = self.client[db_name]
@@ -34,10 +34,15 @@ class MongoDBStore:
         collection.update_one({"_id": ObjectId(document_id)}, {"$set": document})
         return document
 
-    def delete_document(self, db_name: str, db_collection: str, document_id: str):
+    def delete_document_by_id(self, db_name: str, db_collection: str, document_id: str):
         db = self.client[db_name]
         collection = db[db_collection]
         return collection.delete_one({"_id": ObjectId(document_id)})
+
+    def delete_document_by_query(self, db_name: str, db_collection: str,query):
+        db = self.client[db_name]
+        collection = db[db_collection]
+        return collection.delete_one(query)
 
     def initialize_database(self, db_name: str, db_collection: str):
         db = self.client[db_name]
