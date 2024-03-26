@@ -30,9 +30,9 @@ class TestMongoDBStore:
 
         # Create document
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
-        print(f" Added document {result}")
+        print(f" Added document {result.inserted_id}")
 
-        assert result.get("_id") is not None
+        assert result.inserted_id is not None
 
         # Clean db after successful test run
         mongo_driver.delete_document_by_query("sablon_db", "sablon_collection", sablon_document)
@@ -45,7 +45,7 @@ class TestMongoDBStore:
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
 
         # Store created document Objectid
-        document_id = result.get("_id")
+        document_id = result.inserted_id
 
         # Get all documents
         result = list(mongo_driver.get_all_documents("sablon_db", "sablon_collection"))
@@ -65,7 +65,7 @@ class TestMongoDBStore:
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
 
         # Store created document Objectid
-        document_id = result.get("_id")
+        document_id = result.inserted_id
 
         # Get document by id
         result = mongo_driver.get_document_by_id("sablon_db", "sablon_collection", document_id)
@@ -85,7 +85,7 @@ class TestMongoDBStore:
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
 
         # Store created document Objectid
-        document_id = result.get("_id")
+        document_id = result.inserted_id
 
         # Get documents by query
         result = mongo_driver.get_documents_by_query("sablon_db", "sablon_collection", {"name": sablon_document.get("name")})
@@ -106,7 +106,7 @@ class TestMongoDBStore:
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
 
         # Store created document Objectid
-        document_id = result.get("_id")
+        document_id = result.inserted_id
 
         # Update document
         result = mongo_driver.update_document("sablon_db", "sablon_collection", document_id, sablon_document_update)
@@ -135,8 +135,7 @@ class TestMongoDBStore:
         print(f" Added document {result}")
 
         # Store created document Objectid
-        document_id = result.get("_id")
-        # print(f" Created document id stored {document_id} type {type(document_id)}")
+        document_id = result.inserted_id
 
         # Delete document by id
         result = mongo_driver.delete_document_by_id("sablon_db", "sablon_collection", document_id)
@@ -156,8 +155,7 @@ class TestMongoDBStore:
         print(f" Added document {result}")
 
         # Store created document Objectid
-        document_id = result.get("_id")
-        # print(f" Created document id stored {document_id} type {type(document_id)}")
+        document_id = result.inserted_id
 
         # Delete document by id
         result = mongo_driver.delete_document_by_query("sablon_db", "sablon_collection", {"name": sablon_document.get("name")})
