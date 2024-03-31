@@ -3,8 +3,6 @@ from bson import ObjectId
 from utils.db_store import MongoDBStore
 from models.sablon_model import SablonModel
 
-""
-
 
 class SablonServices:
     def __init__(self):
