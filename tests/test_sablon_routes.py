@@ -23,4 +23,4 @@ class TestSablonRoutes:
         response = sablon_router.post("/", json=sablon_data)
         assert response.status_code == 200
         assert response.json().get("oid") is not None
-        # sablon_router.delete(f"/{response.json().get('oid')}")
+        sablon_router.delete(f"/{response.json().get('oid')}")

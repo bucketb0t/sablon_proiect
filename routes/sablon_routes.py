@@ -1,4 +1,4 @@
-from typing import List, Union
+from typing import List, Dict, Any, Optional, Union
 from fastapi import APIRouter, HTTPException
 
 from models.sablon_model import SablonModel
@@ -8,13 +8,13 @@ router = APIRouter()
 sablon_service = SablonServices()
 
 
-@router.post("/", response_model=dict)
-async def create_sablon(sablon_data: dict) -> dict | HTTPException:
+@router.post("/", response_model=Dict[str, Any])
+async def create_sablon(sablon_data: dict) -> Dict[str, Any]:
     try:
         result = sablon_service.add_sablon(SablonModel(**sablon_data))
         result["oid"] = str(result["oid"])
 
-        if result.get("error") is not None:
+        if isinstance(result, dict) and result.get("error") is not None:
             raise HTTPException(status_code=400, detail=result.get("error"))
         else:
             return result
@@ -23,12 +23,12 @@ async def create_sablon(sablon_data: dict) -> dict | HTTPException:
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.get("/", response_model=list)
-async def get_all_sablons() -> list[SablonModel] | HTTPException:
+@router.get("/", response_model=List[SablonModel])
+async def get_all_sablons() -> List[SablonModel]:
     try:
         results = sablon_service.get_all_sabloane()
 
-        if results.get("error") is not None:
+        if isinstance(results, dict) and results.get("error") is not None:
             raise HTTPException(status_code=400, detail=results.get("error"))
         else:
             return results
@@ -36,13 +36,13 @@ async def get_all_sablons() -> list[SablonModel] | HTTPException:
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.get("/{input_data}", response_model=list)
-async def get_sablon_by(input_data: str | None, body_data: dict | None) \
-        -> list[SablonModel] | SablonModel | HTTPException:
+@router.get("/{input_data}", response_model=Union[SablonModel, List[SablonModel]])
+async def get_sablon_by(input_data: Optional[str] = None, body_data: Optional[Dict[str, Any]] = None) \
+        -> Union[SablonModel, List[SablonModel]]:
     if input_data and body_data is None:
         try:
             result = sablon_service.get_sablon_by_oid(input_data)
-            if result.get("error") is not None:
+            if isinstance(result, dict) and result.get("error") is not None:
                 raise HTTPException(status_code=400, detail=result.get("error"))
             else:
                 return result
@@ -53,7 +53,7 @@ async def get_sablon_by(input_data: str | None, body_data: dict | None) \
     elif input_data is None and body_data:
         try:
             results = sablon_service.get_sabloane_by_query(body_data)
-            if results.get("error") is not None:
+            if isinstance(results, dict) and results.get("error") is not None:
                 raise HTTPException(status_code=400, detail=results.get("error"))
             else:
                 return results
@@ -65,11 +65,11 @@ async def get_sablon_by(input_data: str | None, body_data: dict | None) \
         raise HTTPException(status_code=400, detail="Error! Bad get request")
 
 
-@router.put("/{input_data}", response_model=dict)
-async def update_sablon(input_data: str, body_data: dict) -> dict | HTTPException:
+@router.put("/{input_data}", response_model=Dict[str, Any])
+async def update_sablon(input_data: str, body_data: dict) -> Dict[str, Any]:
     try:
         result = sablon_service.update_sablon(input_data, body_data)
-        if result.get("error") is not None:
+        if isinstance(result, dict) and result.get("error") is not None:
             raise HTTPException(status_code=400, detail=result.get("error"))
         else:
             return result
@@ -78,22 +78,21 @@ async def update_sablon(input_data: str, body_data: dict) -> dict | HTTPExceptio
         raise HTTPException(status_code=400, detail=str(e))
 
 
-@router.delete("/{input_data}", response_model=dict)
-async def delete_sablon_by(input_data: str | None ,body_data: dict | None) -> dict | HTTPException:
+@router.delete("/{input_data}", response_model=Dict[str, Any])
+async def delete_sablon_by(input_data: Optional[str] = None, body_data: Optional[Dict[str, Any]] = None) -> Dict[str, Any]:
     if input_data and body_data is None:
         result = sablon_service.delete_sablon_by_id(input_data)
-        if result.get("error") is not None:
+        if isinstance(result, dict) and result.get("error") is not None:
             raise HTTPException(status_code=400, detail=result.get("error"))
         else:
             return result
 
     elif input_data is None and body_data:
-        print("AICI")
         result = sablon_service.delete_sablon_by_query(body_data)
-        if result.get("error") is not None:
+        if isinstance(result, dict) and result.get("error") is not None:
             raise HTTPException(status_code=400, detail=result.get("error"))
         else:
             return result
 
     else:
-        raise HTTPException(status_code=400, detail="Error! Bad get request")
+        raise HTTPException(status_code=400, detail="Invalid request. Please provide either an ID in the URL path or a JSON body.")
