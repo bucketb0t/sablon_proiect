@@ -20,6 +20,7 @@ import pytest
 ])
 def test_sablon_model(sablon_input, sablon_output):
     sablon = SablonModel(**sablon_input)
+    print(f"\n\033[94mModel: \033[92mSablon model: \033[96m{sablon}\033[0m\n")
     for key, value in sablon_output.items():
         assert getattr(sablon, key) == value
 

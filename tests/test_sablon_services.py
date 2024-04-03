@@ -46,13 +46,14 @@ class TestSablonServices:
     def test_add_sablon_success(self, sablon_services, sablon_model, sablon_dict):
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
+        print(f"\n\033[93mService: \033[92mAdd sablon success: \033[96m{result}\033[0m\n")
         assert result.get("oid") is not None
         sablon_services.delete_sablon_by_query(sablon_dict)
 
     def test_add_sablon_fail(self, sablon_services, sablon_dict):
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_dict)
-        print(f"result: {result}")
+        print(f"\n\033[93mService: \033[92mAdd sablon fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
         sablon_services.delete_sablon_by_query(sablon_dict)
 
@@ -65,6 +66,7 @@ class TestSablonServices:
         result = sablon_services.add_sablon(sablon_model)
 
         results = sablon_services.get_all_sabloane()
+        print(f"\n\033[93mService: \033[92mGet all sabloane success: \033[96m{results}\033[0m\n")
         assert len(results) == 3
         for result in results:
             assert result == sablon_model
@@ -76,15 +78,15 @@ class TestSablonServices:
 
         result = sablon_db_store.add_document("sablon_db", "sablon_collection", sablon_dict_bad)
         result = sablon_services.get_all_sabloane()
-
+        print(f"\n\033[93mService: \033[92mGet all sabloane fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
-
         sablon_services.delete_sablon_by_query(sablon_dict_bad)
 
     def test_get_sablon_by_oid_success(self, sablon_services, sablon_model, sablon_dict):
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.get_sablon_by_oid(result.get("oid"))
+        print(f"\n\033[93mService: \033[92mGet sablon by oid success: \033[96m{result}\033[0m\n")
         assert result == sablon_model
         sablon_services.delete_sablon_by_query(sablon_dict)
 
@@ -93,9 +95,8 @@ class TestSablonServices:
 
         result = sablon_db_store.add_document("sablon_db", "sablon_collection", sablon_dict_bad)
         result = sablon_services.get_sablon_by_oid(result.inserted_id)
-
+        print(f"\n\033[93mService: \033[92mGet sablon by oid fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
-
         sablon_services.delete_sablon_by_query(sablon_dict_bad)
 
     def test_get_sabloane_by_query_success(self, sablon_services, sablon_model, sablon_dict):
@@ -108,6 +109,7 @@ class TestSablonServices:
         result = sablon_services.add_sablon(sablon_model)
 
         results = sablon_services.get_sabloane_by_query({"age": 24})
+        print(f"\n\033[93mService: \033[92mGet sabloane by query success: \033[96m{results}\033[0m\n")
         for result in results:
             assert result.age == sablon_dict.get("age")
 
@@ -124,7 +126,7 @@ class TestSablonServices:
 
         result = sablon_db_store.add_document("sablon_db", "sablon_collection", sablon_dict_bad)
         result = sablon_services.get_sabloane_by_query({"age": "24"})
-
+        print(f"\n\033[93mService: \033[92mGet sabloane by query fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
 
         sablon_services.delete_sablon_by_query(sablon_dict_bad)
@@ -133,7 +135,7 @@ class TestSablonServices:
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.update_sablon(result.get("oid"), sablon_dict_update)
-        # print(f"result: {result}")
+        print(f"\n\033[93mService: \033[92mUpdate sablon success: \033[96m{result}\033[0m\n")
         assert result == {"result": "Documents updated: 1"}
 
         sablon_services.delete_sablon_by_query(sablon_dict_update)
@@ -142,13 +144,14 @@ class TestSablonServices:
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.update_sablon(result.get("oid"), sablon_model)
-        # print(f"result: {result}")
+        print(f"\n\033[93mService: \033[92mUpdate sablon fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
 
     def test_delete_sablon_by_id_success(self, sablon_services, sablon_model, sablon_dict):
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.delete_sablon_by_id(result.get("oid"))
+        print(f"\n\033[93mService: \033[92mDelete sablon by id success: \033[96m{result}\033[0m\n")
         assert result == {"result": f"Documents deleted: 1"}
         sablon_services.delete_sablon_by_query(sablon_dict)
 
@@ -156,6 +159,7 @@ class TestSablonServices:
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.delete_sablon_by_id(sablon_model)
+        print(f"\n\033[93mService: \033[92mDelete sablon by id fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
         sablon_services.delete_sablon_by_query(sablon_dict)
 
@@ -163,6 +167,7 @@ class TestSablonServices:
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.delete_sablon_by_query({"gender": "Neutral"})
+        print(f"\n\033[93mService: \033[92mDelete sablon by query success: \033[96m{result}\033[0m\n")
         assert result == {"result": "Document deleted: 1"}
         sablon_services.delete_sablon_by_query(sablon_dict)
 
@@ -170,5 +175,6 @@ class TestSablonServices:
         sablon_services.delete_sablon_by_query(sablon_dict)
         result = sablon_services.add_sablon(sablon_model)
         result = sablon_services.delete_sablon_by_query(sablon_model)
+        print(f"\n\033[93mService: \033[92mDelete sablon by query fail: \033[96m{result}\033[0m\n")
         assert result.get("error") is not None
         sablon_services.delete_sablon_by_query(sablon_dict)

@@ -47,7 +47,6 @@ class SablonServices:
             return {"error": str(e)}
 
     def update_sablon(self, sablon_oid: str, sablon: dict) -> dict:
-
         try:
             result = self.db.update_document("sablon_db", "sablon_collection", ObjectId(sablon_oid), sablon)
             return {"result": f"Documents updated: {result.modified_count}"}

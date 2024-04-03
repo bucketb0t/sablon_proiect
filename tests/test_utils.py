@@ -30,7 +30,7 @@ class TestMongoDBStore:
 
         # Create document
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
-        print(f" Added document {result.inserted_id}")
+        print(f"\n\033[91mUtils: \033[92mAdd document: \033[96mAdded document {result.inserted_id}\033[0m\n")
 
         assert result.inserted_id is not None
 
@@ -49,7 +49,7 @@ class TestMongoDBStore:
 
         # Get all documents
         result = list(mongo_driver.get_all_documents("sablon_db", "sablon_collection"))
-        print(f" Get all documents: {result}")
+        print(f"\n\033[91mUtils: \033[92mGet all documents: \033[96m{result}\033[0m\n")
 
         assert result[0].get("_id") == document_id
         assert result[0].get("name") == sablon_document.get("name")
@@ -69,7 +69,7 @@ class TestMongoDBStore:
 
         # Get document by id
         result = mongo_driver.get_document_by_id("sablon_db", "sablon_collection", document_id)
-        print(f" Get document by id: {result}")
+        print(f"\n\033[91mUtils: \033[92mGet document by id: \033[96m{result}\033[0m\n")
 
         assert result.get("_id") == document_id
         assert result.get("name") == sablon_document.get("name")
@@ -89,7 +89,7 @@ class TestMongoDBStore:
 
         # Get documents by query
         result = mongo_driver.get_documents_by_query("sablon_db", "sablon_collection", {"name": sablon_document.get("name")})
-        print(f" Get documents by query: {result}")
+        print(f"\n\033[91mUtils: \033[92mGet documents by query: \033[96m{result}\033[0m\n")
 
         assert result[0].get("_id") == document_id
         assert result[0].get("name") == sablon_document.get("name")
@@ -110,13 +110,12 @@ class TestMongoDBStore:
 
         # Update document
         result = mongo_driver.update_document("sablon_db", "sablon_collection", document_id, sablon_document_update)
-        print(f" Update document return: {result.modified_count}")
+        print(f"\n\033[91mUtils: \033[92mUpdate document: \033[96mUpdated document {result.modified_count}\033[0m\n")
 
         assert result.modified_count == 1
 
         # Get documents by query
         result = mongo_driver.get_document_by_id("sablon_db", "sablon_collection", document_id)
-        print(f" Get document by id: {result}")
 
         assert result.get("_id") == document_id
         assert result.get("name") == sablon_document_update.get("name")
@@ -132,14 +131,13 @@ class TestMongoDBStore:
 
         # Create document
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
-        print(f" Added document {result}")
 
         # Store created document Objectid
         document_id = result.inserted_id
 
         # Delete document by id
         result = mongo_driver.delete_document_by_id("sablon_db", "sablon_collection", document_id)
-        print(f" Deleted document {result.deleted_count}")
+        print(f"\n\033[91mUtils: \033[92mDelete document document by id: \033[96mDeleted document {result.deleted_count}\033[0m\n")
 
         assert result.deleted_count == 1
 
@@ -152,14 +150,13 @@ class TestMongoDBStore:
 
         # Create document
         result = mongo_driver.add_document("sablon_db", "sablon_collection", sablon_document)
-        print(f" Added document {result}")
 
         # Store created document Objectid
         document_id = result.inserted_id
 
         # Delete document by id
         result = mongo_driver.delete_document_by_query("sablon_db", "sablon_collection", {"name": sablon_document.get("name")})
-        print(f" Deleted document {result.deleted_count}")
+        print(f"\n\033[91mUtils: \033[92mDelete document document by query: \033[96mDeleted document {result.deleted_count}\033[0m\n")
 
         assert result.deleted_count == 1
 
@@ -173,6 +170,7 @@ class TestMongoDBStore:
 
         # Run initialize_database function and store the return
         result = mongo_driver.initialize_database("sablon_db", "sablon_collection", sablon_document, sablon_document_update)
+        print(f"\n\033[91mUtils: \033[92mInitialize database: \033[96m{result}\033[0m\n")
 
         assert result is True
 
