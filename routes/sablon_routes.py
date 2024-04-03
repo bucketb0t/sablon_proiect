@@ -71,8 +71,6 @@ async def get_sablon_by(input_data: Optional[str] = None, body_data: Optional[Di
 
 @router.put("/{input_data}", response_model=Dict[str, Any])
 async def update_sablon(input_data: str, body_data: dict) -> Dict[str, Any]:
-    print(f"input_data {input_data} {type(input_data)}")
-    print(f"body_data {body_data} {type(body_data)} {body_data.get('gender')} {type(body_data.get('gender'))}")
     try:
         if "name" in body_data and not isinstance(body_data.get("name"),str):
             raise HTTPException(status_code=400, detail="Error! 'name' parameter is not a string instance")
