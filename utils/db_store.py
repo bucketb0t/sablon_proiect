@@ -1,6 +1,8 @@
+"""
+This module provides a MongoDBStore class for general CRUD operations.
+"""
 from typing import Any, Mapping
 
-import pymongo
 from bson import ObjectId
 from pymongo import MongoClient
 from pymongo.cursor import Cursor
@@ -8,14 +10,14 @@ from pymongo.results import UpdateResult, InsertOneResult, DeleteResult
 
 
 class MongoDBStore:
-    '''
+    """
     Mongo database driver for general CRUD operations
-    '''
+    """
 
     def __init__(self):
-        '''
+        """
         Initializing the MongoDBStore class with a pymongo MongoCLient set on localhost:27017
-        '''
+        """
         self.client = MongoClient('localhost', 27017)
 
     def add_document(self, db_name: str, db_collection: str, document: dict) -> InsertOneResult:
@@ -102,18 +104,15 @@ class MongoDBStore:
         collection = db[db_collection]
         return collection.delete_one(query)
 
-    def initialize_database(self, db_name: str, db_collection: str,
-                            test_document={"name": "test_name"},
-                            test_document_update={"name": "test_name_update"}):
+    def initialize_database(self, db_name: str, db_collection: str):
         """
         Method that can be used to cycle a basic CRUD operation cycle on a specified collection part of a specified database
         :param db_name: receives the string name of the database name to be accessed
         :param db_collection: receives the string name of the collection name to be access
-        :param test_document: receives a dictionary that can be used for basic CRD operations
-        :param test_document_update: receives a dictionary that can be used for basic Update uperation
         :return: returns False if a step in initialization fails, and True if all steps in initialization pass
         """
-
+        test_document = {"name": "test_name"}
+        test_document_update = {"name": "test_name_update"}
         # Create document
         result = self.add_document(db_name, db_collection, test_document)
         test_document_id = result.inserted_id

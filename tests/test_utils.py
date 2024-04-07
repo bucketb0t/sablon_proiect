@@ -169,7 +169,7 @@ class TestMongoDBStore:
         mongo_driver.delete_document_by_query("sablon_db", "sablon_collection", sablon_document_update)
 
         # Run initialize_database function and store the return
-        result = mongo_driver.initialize_database("sablon_db", "sablon_collection", sablon_document, sablon_document_update)
+        result = mongo_driver.initialize_database("sablon_db", "sablon_collection")
         print(f"\n\033[91mUtils: \033[92mInitialize database: \033[96m{result}\033[0m\n")
 
         assert result is True

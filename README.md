@@ -29,9 +29,6 @@ pip install -r requirements.txt
     ```
 4. After running the command, you should see output indicating that the FastAPI server is running. By default, it will
    listen on http://127.0.0.1:8000.
-5. You can now access your `client` folder and open `index.html` file in your preferred browser and you should have a
-   similar layout as this:
-   ![img_1.png](img_1.png)
 
 ### Extras
 
@@ -64,7 +61,7 @@ In order to register a directory with code for automatic documentation, you need
 
 ```commandline
 cd docs/
-python -m sphinx.ext.apidoc -o .\source\ <path_to_directory>
+python -m sphinx.ext.apidoc -o .\source\path_to_directory
 ```
 
 - this will generate one rst template file for each Python module, under source/ directory
@@ -138,19 +135,7 @@ pip install pylint
 - usage:
 
 ```commandline
- pylint .\sablon_proiect\
+ pylint *
 ```
 
-2. mypy
 
-- it's used for static type checking and can be installed with:
-
-```commandline
-pip install mypy
-```
-
-- usage:
-
-```commandline
-mypy .\sablon_proiect\
-```

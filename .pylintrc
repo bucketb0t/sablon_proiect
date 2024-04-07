@@ -1,8 +1,8 @@
-[MASTER]
-ignore = .git,__pycache__
+    [MASTER]
+    ignore = .git,__pycache__,README.md,requirements.txt,tests/
 
-[MESSAGES CONTROL]
-disable = C0115, C0116, W0621, R1705, E0401, C0413
+    [MESSAGES CONTROL]
+    disable = C0115, C0116, W0621, R1705, E0401, C0413, C0301, W0707, W0718, R0911
 
-[FORMAT]
-max-line-length = 200
+    [FORMAT]
+    max-line-length = 200

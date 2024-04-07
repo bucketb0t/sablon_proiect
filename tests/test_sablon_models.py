@@ -1,5 +1,6 @@
-from models.sablon_model import SablonModel
 import pytest
+
+from models.sablon_model import SablonModel
 
 
 @pytest.mark.parametrize("sablon_input, sablon_output", [
