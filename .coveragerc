@@ -1,0 +1,16 @@
+[run]
+# Omit certain files or directories from coverage measurement
+omit =
+    */site-packages/*
+    */tests/*
+    */__init__.py
+    */*venv*/*
+    */sablon_api.py
+
+
+[report]
+show_missing = True
+fail_under = 90
+
+[html]
+directory = htmlcov
