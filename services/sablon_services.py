@@ -5,7 +5,7 @@ from models.sablon_model import SablonModel
 
 
 class SablonServices:
-    def __init__(self):
+    def     __init__(self):
         self.db = MongoDBStore()
 
     def add_sablon(self, sablon_model: SablonModel) -> dict:
