@@ -138,7 +138,7 @@ pip install pylint
 - usage:
 
 ```commandline
-pylint .\server\
+ pylint .\sablon_proiect\
 ```
 
 2. mypy
@@ -152,5 +152,5 @@ pip install mypy
 - usage:
 
 ```commandline
-mypy .\server\
+mypy .\sablon_proiect\
 ```

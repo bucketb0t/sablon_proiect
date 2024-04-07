@@ -1,3 +1,18 @@
+"""
+Sablon Management API
+
+This module defines a FastAPI application for managing Sablon documents. It includes routing for CRUD operations on Sablon documents.
+
+Usage:
+    To start the server, run this script directly. The server listens on port 8000 by default.
+
+Attributes:
+    None
+
+Functions:
+    None
+"""
+
 import uvicorn
 from fastapi import FastAPI
 
